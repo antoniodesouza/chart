@@ -32,7 +32,7 @@ var commonChartSettings = {
 };
 
 
-
+window.intradayChart = null;
 
 // Intraday Chart
 (function ($) {
@@ -149,7 +149,9 @@ var commonChartSettings = {
 			var extremes = chart.get('yAxis').getExtremes();
 			var newYMin = Math.min(extremes.min, (Math.floor(settings.ChartData[0].pricePreviousClose) ));
 			var newYMax = Math.max(extremes.max, (Math.ceil(settings.ChartData[0].pricePreviousClose) ));
-			chart.get('yAxis').setExtremes (newYMin, newYMax);
+			chart.get('yAxis').setExtremes(newYMin, newYMax);
+
+			window.intradayChart = chart;
 
 
         }

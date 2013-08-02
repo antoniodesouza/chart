@@ -36,29 +36,41 @@
 
 	</div>
         
-        <script type="text/javascript" src="phonegap.js"></script>
-        	<script type="text/javascript">
-                $(document).ready(function () {
-                    $.ajax({
-                        url: 'http://tmmobile_apollo.uat.transmissionmedia.ca/api/profiles/6597',
-                        type: 'GET',
-                        dataType: 'JSONP',
-                        contentType: "application/json; charset=utf-8",
-                        data: {},
-                        async: false,
-                        success: function (data) {
-                            console.log(data);
+    <script type="text/javascript" src="phonegap.js"></script>
+        
+ 	<script type="text/javascript">
+		$(document).ready(function () {
 
-                            $('#intradayChart').horizons_IntradayChart({
-                                ChartData: data.intradayData,
-                                ContainerId: 'intradayChart',
-                                Symbol: 'HXS'
-                            });
+			setInterval(function () { console.log('updating');
+				$.ajax({
+					url: 'http://tmmobile_apollo.uat.transmissionmedia.ca/api/profiles/6597',
+					//url: 'http://localhost:54564/api/profiles/6597',
 
-                        }
-                    });
-                });
-        </script>
+					type: 'GET',
+					dataType: 'JSONP',
+					contentType: "application/json; charset=utf-8",
+					data: {},
+					async: false,
+					success: function (data) {
+						if (window.intradayChart) {
+							window.intradayChart.destroy();
+						}
+
+						$('#intradayChart').horizons_IntradayChart({
+							ChartData: data.intradayData,
+							ContainerId: 'intradayChart',
+							Symbol: 'HXS'
+						});
+					}
+				});
+
+			}, 2000);
+		});
+
+
+		
+	</script>
+        
         <!-- <script type="text/javascript" src="js/index.js"></script> -->
     </body>
 </html>
